@@ -1,9 +1,17 @@
 # server/app.py
 
 from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 
-from models import db
+app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///app.db'  # Replace with your database URI
+
+db = SQLAlchemy(app)
+migrate = Migrate(app, db)
+
+# Ensure you have models imported after db is defined
+from . import models  # Assuming models.py contains your database models
 
 # create a Flask application instance
 app = Flask(__name__)
